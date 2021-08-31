@@ -2,21 +2,31 @@
   <div>
     <h2>Todo List</h2>
     <ul>
-      <TodoListItem v-for="item in todos" :key="item.id" :task="item.task" />
+      <TodoListItem
+        @toggleDone="toggleDone"
+        v-for="item in tasks"
+        :key="item.id"
+        :item="item"
+      />
     </ul>
   </div>
 </template>
 
 <script>
-// import axios from "axios";
 import TodoListItem from "./TodoListItem";
 export default {
   components: {
     TodoListItem,
   },
-  props: ["todos"],
+  props: ["tasks"],
+  emits: ["toggleDone"],
   data() {
     return {};
+  },
+  methods: {
+    toggleDone(value) {
+      this.$emit("toggleDone", value);
+    },
   },
 };
 </script>

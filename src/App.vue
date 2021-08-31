@@ -1,7 +1,7 @@
 <template>
   <h1>Todo App</h1>
   <TodoListCreate @createTodo="createTodo" />
-  <TodoList :todos="tasks" />
+  <TodoList @toggleDone="toggleItemDone" v-if="tasks" :tasks="tasks" />
 </template>
 
 <script>
@@ -15,7 +15,7 @@ export default {
   },
   data() {
     return {
-      tasks: [],
+      tasks: null,
     };
   },
   methods: {
@@ -25,8 +25,16 @@ export default {
           "https://vue-todo-list-8875a-default-rtdb.europe-west1.firebasedatabase.app/tasks.json"
         )
         .then((data) => {
-          console.log(data);
-          this.tasks = data.data;
+          const results = [];
+          for (const id in data.data) {
+            results.push({
+              id: id,
+              task: data.data[id].task,
+              complete: data.data[id].complete,
+            });
+          }
+
+          this.tasks = results;
         });
     },
     async createTodo(value) {
@@ -38,6 +46,17 @@ export default {
         }
       );
       this.getTodos();
+    },
+    toggleItemDone(value) {
+      //fetch and update the items "complete" value:
+      axios
+        .patch(
+          `https://vue-todo-list-8875a-default-rtdb.europe-west1.firebasedatabase.app/tasks/${value}.json`,
+          { complete: true }
+        )
+        .then((data) => {
+          console.log(data);
+        });
     },
   },
   mounted() {
