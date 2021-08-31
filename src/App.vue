@@ -1,10 +1,11 @@
 <template>
   <h1>Todo App</h1>
   <TodoListCreate @createTodo="createTodo" />
-  <TodoList :todos="todosStorage" />
+  <TodoList :todos="tasks" />
 </template>
 
 <script>
+import axios from "axios";
 import TodoList from "./components/TodoList";
 import TodoListCreate from "./components/TodoListCreate";
 export default {
@@ -14,18 +15,33 @@ export default {
   },
   data() {
     return {
-      todosStorage: [
-        { id: "eat", task: "eat", complete: false },
-        { id: "sleep", task: "sleep", comsplete: false },
-      ],
+      tasks: [],
     };
   },
   methods: {
-    createTodo(value) {
-      console.log(value);
-      console.log("create a new todo!");
-      this.todosStorage.unshift({ id: value, task: value, complete: false });
+    getTodos() {
+      axios
+        .get(
+          "https://vue-todo-list-8875a-default-rtdb.europe-west1.firebasedatabase.app/tasks.json"
+        )
+        .then((data) => {
+          console.log(data);
+          this.tasks = data.data;
+        });
     },
+    async createTodo(value) {
+      await axios.post(
+        "https://vue-todo-list-8875a-default-rtdb.europe-west1.firebasedatabase.app/tasks.json",
+        {
+          task: value,
+          complete: false,
+        }
+      );
+      this.getTodos();
+    },
+  },
+  mounted() {
+    this.getTodos();
   },
 };
 </script>

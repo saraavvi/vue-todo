@@ -8,14 +8,15 @@
 </template>
 
 <script>
+// import axios from "axios";
 import TodoListItem from "./TodoListItem";
 export default {
   components: {
     TodoListItem,
   },
   props: ["todos"],
-  created() {
-    console.log(this.todos);
+  data() {
+    return {};
   },
 };
 </script>

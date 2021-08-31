@@ -15,7 +15,6 @@ export default {
   },
   methods: {
     handleCreate() {
-      console.log(this.userInput);
       this.$emit("createTodo", this.userInput);
     },
   },

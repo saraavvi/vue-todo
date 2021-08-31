@@ -6,7 +6,7 @@
 export default {
   props: ["task"],
   created() {
-    console.log(this.task);
+    // console.log(this.task);
   },
 };
 </script>
