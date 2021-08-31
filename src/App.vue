@@ -47,16 +47,18 @@ export default {
       );
       this.getTodos();
     },
-    toggleItemDone(value) {
+    async toggleItemDone(value, status) {
       //fetch and update the items "complete" value:
-      axios
+      console.log(status);
+      await axios
         .patch(
           `https://vue-todo-list-8875a-default-rtdb.europe-west1.firebasedatabase.app/tasks/${value}.json`,
-          { complete: true }
+          { complete: status }
         )
         .then((data) => {
           console.log(data);
         });
+      this.getTodos();
     },
   },
   mounted() {

@@ -18,7 +18,7 @@ export default {
   },
   methods: {
     handleToggleDone() {
-      this.$emit("toggleDone", this.item.id);
+      this.$emit("toggleDone", this.item.id, !this.item.complete);
     },
   },
 };

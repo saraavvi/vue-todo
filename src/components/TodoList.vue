@@ -24,8 +24,8 @@ export default {
     return {};
   },
   methods: {
-    toggleDone(value) {
-      this.$emit("toggleDone", value);
+    toggleDone(value, status) {
+      this.$emit("toggleDone", value, status);
     },
   },
 };
