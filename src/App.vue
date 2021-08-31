@@ -1,17 +1,33 @@
 <template>
-  <img alt="Vue logo" src="./assets/logo.png">
-  <HelloWorld msg="Welcome to Your Vue.js App"/>
+  <h1>Todo App</h1>
+  <TodoListCreate @createTodo="createTodo" />
+  <TodoList :todos="todosStorage" />
 </template>
 
 <script>
-import HelloWorld from './components/HelloWorld.vue'
-
+import TodoList from "./components/TodoList";
+import TodoListCreate from "./components/TodoListCreate";
 export default {
-  name: 'App',
   components: {
-    HelloWorld
-  }
-}
+    TodoList,
+    TodoListCreate,
+  },
+  data() {
+    return {
+      todosStorage: [
+        { id: "eat", task: "eat", complete: false },
+        { id: "sleep", task: "sleep", comsplete: false },
+      ],
+    };
+  },
+  methods: {
+    createTodo(value) {
+      console.log(value);
+      console.log("create a new todo!");
+      this.todosStorage.unshift({ id: value, task: value, complete: false });
+    },
+  },
+};
 </script>
 
 <style>
@@ -22,5 +38,6 @@ export default {
   text-align: center;
   color: #2c3e50;
   margin-top: 60px;
+  border: 1px solid grey;
 }
 </style>
