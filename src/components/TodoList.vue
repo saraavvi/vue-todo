@@ -20,12 +20,9 @@ export default {
   },
   props: ["tasks"],
   emits: ["toggleDone"],
-  data() {
-    return {};
-  },
   methods: {
-    toggleDone(value, status) {
-      this.$emit("toggleDone", value, status);
+    toggleDone(id, status) {
+      this.$emit("toggleDone", id, status);
     },
   },
 };

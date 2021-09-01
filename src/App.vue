@@ -5,7 +5,7 @@
 </template>
 
 <script>
-import axios from "axios";
+import { MyApi } from "./api/MyApi.js";
 import TodoList from "./components/TodoList";
 import TodoListCreate from "./components/TodoListCreate";
 export default {
@@ -20,44 +20,24 @@ export default {
   },
   methods: {
     getTodos() {
-      axios
-        .get(
-          "https://vue-todo-list-8875a-default-rtdb.europe-west1.firebasedatabase.app/tasks.json"
-        )
-        .then((data) => {
-          const results = [];
-          for (const id in data.data) {
-            results.push({
-              id: id,
-              task: data.data[id].task,
-              complete: data.data[id].complete,
-            });
-          }
-
-          this.tasks = results;
-        });
+      MyApi.getTodos().then((data) => {
+        const results = [];
+        for (const id in data.data) {
+          results.push({
+            id: id,
+            task: data.data[id].task,
+            complete: data.data[id].complete,
+          });
+        }
+        this.tasks = results;
+      });
     },
     async createTodo(value) {
-      await axios.post(
-        "https://vue-todo-list-8875a-default-rtdb.europe-west1.firebasedatabase.app/tasks.json",
-        {
-          task: value,
-          complete: false,
-        }
-      );
+      await MyApi.createTodo(value);
       this.getTodos();
     },
-    async toggleItemDone(value, status) {
-      //fetch and update the items "complete" value:
-      console.log(status);
-      await axios
-        .patch(
-          `https://vue-todo-list-8875a-default-rtdb.europe-west1.firebasedatabase.app/tasks/${value}.json`,
-          { complete: status }
-        )
-        .then((data) => {
-          console.log(data);
-        });
+    async toggleItemDone(id, status) {
+      await MyApi.toggleTodo(id, status);
       this.getTodos();
     },
   },
