@@ -4,6 +4,7 @@
     <ul>
       <TodoListItem
         @toggleDone="toggleDone"
+        @deleteTodo="deleteTodo"
         v-for="item in tasks"
         :key="item.id"
         :item="item"
@@ -19,10 +20,13 @@ export default {
     TodoListItem,
   },
   props: ["tasks"],
-  emits: ["toggleDone"],
+  emits: ["toggleDone", "deleteTodo"],
   methods: {
     toggleDone(id, status) {
       this.$emit("toggleDone", id, status);
+    },
+    deleteTodo(id) {
+      this.$emit("deleteTodo", id);
     },
   },
 };

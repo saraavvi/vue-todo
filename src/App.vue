@@ -1,7 +1,12 @@
 <template>
   <h1>Todo App</h1>
   <TodoListCreate @createTodo="createTodo" />
-  <TodoList @toggleDone="toggleItemDone" v-if="tasks" :tasks="tasks" />
+  <TodoList
+    @toggleDone="toggleItemDone"
+    @deleteTodo="deleteTodo"
+    v-if="tasks"
+    :tasks="tasks"
+  />
 </template>
 
 <script>
@@ -23,7 +28,7 @@ export default {
       MyApi.getTodos().then((data) => {
         const results = [];
         for (const id in data.data) {
-          results.push({
+          results.unshift({
             id: id,
             task: data.data[id].task,
             complete: data.data[id].complete,
@@ -38,6 +43,10 @@ export default {
     },
     async toggleItemDone(id, status) {
       await MyApi.toggleTodo(id, status);
+      this.getTodos();
+    },
+    async deleteTodo(id) {
+      await MyApi.deleteTodo(id);
       this.getTodos();
     },
   },

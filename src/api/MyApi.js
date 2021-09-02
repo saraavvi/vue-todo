@@ -21,4 +21,10 @@ export const MyApi = {
     const url = `${ROOT_URL}/tasks/${id}.json`;
     return axios.patch(url, { complete: status });
   },
+  //delete one task
+  deleteTodo: (id) => {
+    const url = `${ROOT_URL}/tasks/${id}.json`;
+    return axios.delete(url);
+  },
+  // todo: delete all completed tasks
 };
