@@ -5,8 +5,10 @@
         {{ item.task }}
       </span>
     </div>
-    <input type="checkbox" :checked="isChecked" @click="handleToggleDone" />
-    <BaseButton @click="handleDelete">x</BaseButton>
+    <div>
+      <input type="checkbox" :checked="isChecked" @click="handleToggleDone" />
+      <BaseButton @click="handleDelete">x</BaseButton>
+    </div>
   </li>
 </template>
 
@@ -54,11 +56,12 @@ export default {
 };
 </script>
 
-<style scoped>
+<style scoped lang="scss">
 li {
   display: flex;
-  justify-content: center;
-  border: 1px solid green;
+  justify-content: space-between;
+  // border: 1px solid $primary;
+  border-bottom: 1px solid $primary;
   padding: 1rem;
   margin: 5px;
   list-style: none;

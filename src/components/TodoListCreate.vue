@@ -1,7 +1,11 @@
 <template>
-  <form>
-    <input v-model="userInput" type="text" name="task" />
-    <button @click.prevent="handleCreate">Add Task</button>
+  <form @submit.prevent="handleCreate">
+    <input
+      v-model.trim="userInput"
+      placeholder=" + Add New To-Do"
+      type="text"
+      name="task"
+    />
   </form>
 </template>
 
@@ -15,16 +19,31 @@ export default {
   },
   methods: {
     handleCreate() {
-      this.$emit("createTodo", this.userInput);
+      if (this.userInput.length > 0) {
+        this.$emit("createTodo", this.userInput);
+      }
+      this.userInput = "";
     },
   },
 };
 </script>
 
-<style scoped>
+<style scoped lang="scss">
 form {
-  border: 1px solid blue;
-  padding: 1rem;
-  margin: 5px;
+  display: flex;
+  input {
+    flex-grow: 1;
+    padding-top: 1rem;
+    padding-bottom: 0.5rem;
+    border: none;
+    border-bottom: 3px solid $primary;
+    font-size: 1rem;
+    &:focus {
+      outline: none;
+      &::placeholder {
+        color: transparent;
+      }
+    }
+  }
 }
 </style>

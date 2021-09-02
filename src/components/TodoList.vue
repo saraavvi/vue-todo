@@ -1,6 +1,5 @@
 <template>
   <div>
-    <h2>Todo List</h2>
     <ul>
       <TodoListItem
         @toggleDone="toggleDone"
@@ -32,9 +31,12 @@ export default {
 };
 </script>
 
-<style scoped>
+<style scoped lang="scss">
 div {
-  border: 1px solid red;
-  margin: 5px;
+  // border: 1px solid $primary;
+  ul {
+    padding: 0;
+    margin: 0;
+  }
 }
 </style>
