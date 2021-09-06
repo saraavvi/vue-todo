@@ -1,4 +1,13 @@
 <template>
+  <BaseDialog title="Delete Task" v-if="isClickedDelete">
+    <template #default>
+      <p>Are you sure you want to delete this task?</p>
+    </template>
+    <template #actions>
+      <BaseButton mode="secondary" @click="handleDialogClose">Close</BaseButton>
+      <BaseButton mode="danger" @click="handleDeleteConfirm">Delete</BaseButton>
+    </template>
+  </BaseDialog>
   <li>
     <div>
       <span :class="{ checked: isChecked }">
@@ -8,7 +17,9 @@
     <div class="actions-container">
       <input type="checkbox" :checked="isChecked" @click="handleToggleDone" />
       <button type="button">
-        <i @click="handleDelete" style="font-size:24px" class="fas">&#xf2ed;</i>
+        <i @click="handleDeleteClick" style="font-size:24px" class="fas"
+          >&#xf2ed;</i
+        >
       </button>
     </div>
   </li>
@@ -18,6 +29,11 @@
 export default {
   props: ["item", "id"],
   emits: ["toggleDone", "deleteTodo"],
+  data() {
+    return {
+      isClickedDelete: false,
+    };
+  },
   computed: {
     isChecked() {
       return this.item.complete;
@@ -27,8 +43,15 @@ export default {
     handleToggleDone() {
       this.$emit("toggleDone", this.item.id, !this.item.complete);
     },
-    handleDelete() {
+    handleDeleteClick() {
+      this.isClickedDelete = true;
+    },
+    handleDeleteConfirm() {
       this.$emit("deleteTodo", this.item.id);
+      this.isClickedDelete = false;
+    },
+    handleDialogClose() {
+      this.isClickedDelete = false;
     },
   },
 };
