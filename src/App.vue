@@ -49,8 +49,8 @@ export default {
       await MyApi.deleteTodo(id);
       this.getTodos();
     },
-    clearAll() {
-      MyApi.deleteAllTodo();
+    async clearAll() {
+      await MyApi.deleteAllTodo();
       this.getTodos();
     },
   },
@@ -62,8 +62,7 @@ export default {
 
 <style lang="scss">
 body {
-  // height: 100vh;
-  background-color: $primary-light;
+  background-color: $secondary-light;
 }
 #app {
   display: flex;
@@ -72,12 +71,12 @@ body {
   width: 80vw;
   margin: 0 auto;
   margin-top: 3rem;
+  border: 1px solid $secondary;
   border-radius: 5px;
-  // height: 80vh;
   min-height: 500px;
   font-family: Avenir, Helvetica, Arial, sans-serif;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
-  background-color: $secondary;
+  background-color: white;
 }
 </style>

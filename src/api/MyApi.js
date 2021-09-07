@@ -26,6 +26,7 @@ export const MyApi = {
     const url = `${ROOT_URL}/tasks/${id}.json`;
     return axios.delete(url);
   },
+  //delete all todos
   deleteAllTodo: () => {
     const url = `${ROOT_URL}/tasks.json`;
     return axios.delete(url);

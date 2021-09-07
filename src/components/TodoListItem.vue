@@ -16,8 +16,9 @@
     </div>
     <div class="actions-container">
       <input type="checkbox" :checked="isChecked" @click="handleToggleDone" />
-      <button type="button">
-        <i @click="handleDeleteClick" style="font-size:24px" class="fas"
+      <BaseButton mode="info" size="small">UPDATE</BaseButton>
+      <button class="delete-icon" type="button">
+        <i @click="handleDeleteClick" style="font-size:18px" class="fas"
           >&#xf2ed;</i
         >
       </button>
@@ -61,7 +62,7 @@ export default {
 li {
   display: flex;
   justify-content: space-between;
-  border-bottom: 1px solid $primary;
+  border-bottom: 1px solid $secondary;
   padding: 1rem;
   margin: 5px;
   list-style: none;
@@ -72,17 +73,19 @@ li {
 
   .actions-container {
     display: flex;
+    align-items: center;
 
     input {
-      height: 25px;
-      width: 25px;
+      height: 18px;
+      width: 18px;
+      margin: 0 5px;
       cursor: pointer;
     }
 
-    button {
+    .delete-icon {
       border: none;
-      background-color: $secondary;
-      color: $primary;
+      background-color: white;
+      color: $danger;
       cursor: pointer;
     }
   }
