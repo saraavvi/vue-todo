@@ -28,9 +28,11 @@ div {
   left: 0;
   height: 100vh;
   width: 100%;
-  background-color: rgba(0, 0, 0, 0.297);
+  background-color: rgba(0, 0, 0, 0.146);
 }
 dialog {
+  position: fixed;
+  top: 20vh;
   display: flex;
   flex-direction: column;
   width: 600px;

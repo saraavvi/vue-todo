@@ -15,27 +15,31 @@ button {
   border: none;
   font-weight: bold;
   font-size: 0.7rem;
-  padding: 0.6rem 1rem;
-  border-radius: 10px;
-  box-shadow: 0px 8px 30px rgba(0, 0, 0, 0.1);
+  padding: 0.7rem 1rem;
+  border-radius: 5px;
+  color: white;
   cursor: pointer;
+  &:hover {
+    backdrop-filter: brightness(0.9);
+  }
 }
 .danger {
   background-color: $danger;
 }
 .secondary {
   background-color: $secondary-light;
+  color: black;
 }
 .primary {
   background-color: $primary;
-  color: white;
+  // color: white;
 }
 .info {
   background-color: $info;
-  color: white;
+  // color: white;
 }
 .small {
-  // border-radius: 20px;
   padding: 0.4rem 0.9rem;
+  border-radius: 15px;
 }
 </style>

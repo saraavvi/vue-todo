@@ -11,6 +11,13 @@
     </template>
   </BaseDialog>
   <div class="list-container">
+    <div class="list-actions-container">
+      <input class="search-field" type="text" placeholder="Search..." />
+      <BaseButton mode="primary">FILTER</BaseButton>
+      <BaseButton @click="handleClearAllClick" mode="danger">
+        CLEAR ALL
+      </BaseButton>
+    </div>
     <ul>
       <TodoListItem
         @toggleDone="toggleDone"
@@ -20,11 +27,6 @@
         :item="item"
       />
     </ul>
-    <div>
-      <BaseButton @click="handleClearAllClick" mode="primary">
-        Clear All
-      </BaseButton>
-    </div>
   </div>
 </template>
 
@@ -56,7 +58,6 @@ export default {
     },
     handleClearAllConfirm() {
       this.$emit("clearAll");
-      console.log("delete all!");
       this.isClickedClearAll = false;
     },
   },
@@ -69,11 +70,29 @@ export default {
   display: flex;
   flex-direction: column;
   height: 100%;
-  // border: 1px solid $primary;
   ul {
     padding: 0;
     margin: 0;
     flex-grow: 1;
+  }
+  .list-actions-container {
+    margin: 1rem;
+    button,
+    input {
+      margin-right: 5px;
+    }
+    .search-field {
+      border: 1px solid $secondary;
+      border-radius: 5px;
+      font-style: cursive;
+      padding: 0.6rem 1rem;
+      &::placeholder {
+        font-style: italic;
+      }
+      &:focus {
+        outline: none;
+      }
+    }
   }
 }
 </style>

@@ -2,6 +2,7 @@
   <form @submit.prevent="handleCreate">
     <input
       v-model.trim="userInput"
+      maxlength="80"
       placeholder=" + Add New To-Do"
       type="text"
       name="task"

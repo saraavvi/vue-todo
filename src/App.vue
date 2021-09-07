@@ -1,22 +1,27 @@
 <template>
-  <TodoListCreate @createTodo="createTodo" />
-  <TodoList
-    @toggleDone="toggleItemDone"
-    @deleteTodo="deleteTodo"
-    @clearAll="clearAll"
-    v-if="tasks"
-    :tasks="tasks"
-  />
+  <TheHeader />
+  <section class="main">
+    <TodoListCreate @createTodo="createTodo" />
+    <TodoList
+      @toggleDone="toggleItemDone"
+      @deleteTodo="deleteTodo"
+      @clearAll="clearAll"
+      v-if="tasks"
+      :tasks="tasks"
+    />
+  </section>
 </template>
 
 <script>
 import { MyApi } from "./api/MyApi.js";
 import TodoList from "./components/TodoList";
 import TodoListCreate from "./components/TodoListCreate";
+import TheHeader from "./components/TheHeader";
 export default {
   components: {
     TodoList,
     TodoListCreate,
+    TheHeader,
   },
   data() {
     return {
@@ -62,9 +67,15 @@ export default {
 
 <style lang="scss">
 body {
+  margin: 0;
   background-color: $secondary-light;
 }
 #app {
+  font-family: Avenir, Helvetica, Arial, sans-serif;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+.main {
   display: flex;
   flex-direction: column;
   padding: 1rem;
@@ -74,9 +85,6 @@ body {
   border: 1px solid $secondary;
   border-radius: 5px;
   min-height: 500px;
-  font-family: Avenir, Helvetica, Arial, sans-serif;
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
   background-color: white;
 }
 </style>
