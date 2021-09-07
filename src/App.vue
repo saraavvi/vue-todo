@@ -3,6 +3,7 @@
   <TodoList
     @toggleDone="toggleItemDone"
     @deleteTodo="deleteTodo"
+    @clearAll="clearAll"
     v-if="tasks"
     :tasks="tasks"
   />
@@ -48,6 +49,10 @@ export default {
       await MyApi.deleteTodo(id);
       this.getTodos();
     },
+    clearAll() {
+      MyApi.deleteAllTodo();
+      this.getTodos();
+    },
   },
   mounted() {
     this.getTodos();
@@ -61,10 +66,15 @@ body {
   background-color: $primary-light;
 }
 #app {
+  display: flex;
+  flex-direction: column;
   padding: 1rem;
   width: 80vw;
-  margin: 2rem auto;
-  height: 80vh;
+  margin: 0 auto;
+  margin-top: 3rem;
+  border-radius: 5px;
+  // height: 80vh;
+  min-height: 500px;
   font-family: Avenir, Helvetica, Arial, sans-serif;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;

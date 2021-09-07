@@ -15,7 +15,7 @@ button {
   border: none;
   padding: 0.6rem 1rem;
   border-radius: 5px;
-  box-shadow: 0px 8px 15px rgba(0, 0, 0, 0.1);
+  box-shadow: 0px 8px 30px rgba(0, 0, 0, 0.1);
   cursor: pointer;
 }
 .danger {
@@ -23,5 +23,9 @@ button {
 }
 .secondary {
   background-color: $secondary;
+}
+.primary {
+  background-color: $primary;
+  color: white;
 }
 </style>
