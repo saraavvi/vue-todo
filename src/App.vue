@@ -1,26 +1,15 @@
 <template>
   <TheHeader />
   <section class="main">
-    <TodoListCreate @createTodo="createTodo" />
-    <TodoList
-      @toggleDone="toggleItemDone"
-      @deleteTodo="deleteTodo"
-      @clearAll="clearAll"
-      v-if="tasks"
-      :tasks="tasks"
-    />
+    <router-view :tasks="tasks"></router-view>
   </section>
 </template>
 
 <script>
 import { MyApi } from "./api/MyApi.js";
-import TodoList from "./components/TodoList";
-import TodoListCreate from "./components/TodoListCreate";
 import TheHeader from "./components/TheHeader";
 export default {
   components: {
-    TodoList,
-    TodoListCreate,
     TheHeader,
   },
   data() {
@@ -58,6 +47,14 @@ export default {
       await MyApi.deleteAllTodo();
       this.getTodos();
     },
+  },
+  provide() {
+    return {
+      createTodo: this.createTodo,
+      deleteTodo: this.deleteTodo,
+      toggleItemDone: this.toggleItemDone,
+      clearAll: this.clearAll,
+    };
   },
   mounted() {
     this.getTodos();

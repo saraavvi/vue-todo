@@ -12,6 +12,7 @@ header {
   background-color: white;
   h1 {
     margin: 0.5rem;
+    font-family: $primary-font;
   }
 }
 </style>

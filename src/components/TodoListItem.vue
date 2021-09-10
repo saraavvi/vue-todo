@@ -39,8 +39,8 @@
 
 <script>
 export default {
+  inject: ["deleteTodo", "toggleItemDone"],
   props: ["item", "id"],
-  emits: ["toggleDone", "deleteTodo"],
   data() {
     return {
       isClickedDelete: false,
@@ -54,13 +54,13 @@ export default {
   },
   methods: {
     handleToggleDone() {
-      this.$emit("toggleDone", this.item.id, !this.item.complete);
+      this.toggleItemDone(this.item.id, !this.item.complete);
     },
     handleDeleteClick() {
       this.isClickedDelete = true;
     },
     handleDeleteConfirm() {
-      this.$emit("deleteTodo", this.item.id);
+      this.deleteTodo(this.item.id);
       this.isClickedDelete = false;
     },
     handleDialogClose() {

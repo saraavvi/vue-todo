@@ -10,8 +10,10 @@
       </BaseButton>
     </template>
   </BaseDialog>
+  <TodoListCreate />
   <div class="list-container">
     <div class="list-actions-container">
+      <!-- put in a form? -->
       <input class="search-field" type="text" placeholder="Search..." />
       <BaseButton mode="primary">FILTER</BaseButton>
       <BaseButton @click="handleClearAllClick" mode="danger">
@@ -19,37 +21,27 @@
       </BaseButton>
     </div>
     <ul>
-      <TodoListItem
-        @toggleDone="toggleDone"
-        @deleteTodo="deleteTodo"
-        v-for="item in tasks"
-        :key="item.id"
-        :item="item"
-      />
+      <TodoListItem v-for="item in tasks" :key="item.id" :item="item" />
     </ul>
   </div>
 </template>
 
 <script>
 import TodoListItem from "./TodoListItem";
+import TodoListCreate from "./TodoListCreate";
 export default {
   components: {
     TodoListItem,
+    TodoListCreate,
   },
+  inject: ["clearAll"],
   props: ["tasks"],
-  emits: ["toggleDone", "deleteTodo", "clearAll"],
   data() {
     return {
       isClickedClearAll: false,
     };
   },
   methods: {
-    toggleDone(id, status) {
-      this.$emit("toggleDone", id, status);
-    },
-    deleteTodo(id) {
-      this.$emit("deleteTodo", id);
-    },
     handleClearAllClick() {
       this.isClickedClearAll = true;
     },
@@ -57,7 +49,7 @@ export default {
       this.isClickedClearAll = false;
     },
     handleClearAllConfirm() {
-      this.$emit("clearAll");
+      this.clearAll();
       this.isClickedClearAll = false;
     },
   },

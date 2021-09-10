@@ -12,7 +12,7 @@
 
 <script>
 export default {
-  emits: ["createTodo"],
+  inject: ["createTodo"],
   data() {
     return {
       userInput: "",
@@ -21,7 +21,7 @@ export default {
   methods: {
     handleCreate() {
       if (this.userInput.length > 0) {
-        this.$emit("createTodo", this.userInput);
+        this.createTodo(this.userInput);
       }
       this.userInput = "";
     },
