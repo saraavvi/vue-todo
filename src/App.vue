@@ -1,63 +1,15 @@
 <template>
   <TheHeader />
   <section class="main">
-    <router-view :tasks="tasks"></router-view>
+    <router-view></router-view>
   </section>
 </template>
 
 <script>
-import { MyApi } from "./api/MyApi.js";
 import TheHeader from "./components/TheHeader";
 export default {
   components: {
     TheHeader,
-  },
-  data() {
-    return {
-      tasks: null,
-    };
-  },
-  methods: {
-    getTodos() {
-      MyApi.getTodos().then((data) => {
-        const results = [];
-        for (const id in data.data) {
-          results.unshift({
-            id: id,
-            task: data.data[id].task,
-            complete: data.data[id].complete,
-          });
-        }
-        this.tasks = results;
-      });
-    },
-    async createTodo(value) {
-      await MyApi.createTodo(value);
-      this.getTodos();
-    },
-    async toggleItemDone(id, status) {
-      await MyApi.toggleTodo(id, status);
-      this.getTodos();
-    },
-    async deleteTodo(id) {
-      await MyApi.deleteTodo(id);
-      this.getTodos();
-    },
-    async clearAll() {
-      await MyApi.deleteAllTodo();
-      this.getTodos();
-    },
-  },
-  provide() {
-    return {
-      createTodo: this.createTodo,
-      deleteTodo: this.deleteTodo,
-      toggleItemDone: this.toggleItemDone,
-      clearAll: this.clearAll,
-    };
-  },
-  mounted() {
-    this.getTodos();
   },
 };
 </script>

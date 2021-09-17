@@ -24,7 +24,11 @@
       </span>
     </div>
     <div class="actions-container">
-      <input type="checkbox" :checked="isChecked" @click="handleToggleDone" />
+      <input
+        type="checkbox"
+        :checked="isChecked"
+        @click="handleTaskToggleDone"
+      />
       <BaseButton @click="handleDetailsClick" mode="info" size="small">
         DETAILS
       </BaseButton>
@@ -39,7 +43,7 @@
 
 <script>
 export default {
-  inject: ["deleteTodo", "toggleItemDone"],
+  emits: ["taskDelete", "taskToggleDone"],
   props: ["item", "id"],
   data() {
     return {
@@ -53,14 +57,14 @@ export default {
     },
   },
   methods: {
-    handleToggleDone() {
-      this.toggleItemDone(this.item.id, !this.item.complete);
+    handleTaskToggleDone() {
+      this.$emit("taskToggleDone", this.item.id, !this.item.complete);
     },
     handleDeleteClick() {
       this.isClickedDelete = true;
     },
     handleDeleteConfirm() {
-      this.deleteTodo(this.item.id);
+      this.$emit("taskDelete", this.item.id);
       this.isClickedDelete = false;
     },
     handleDialogClose() {
@@ -70,6 +74,9 @@ export default {
     handleDetailsClick() {
       this.isClickedDetails = true;
     },
+  },
+  mounted() {
+    console.log("list item mounted");
   },
 };
 </script>

@@ -3,8 +3,8 @@ import { createRouter, createWebHistory } from "vue-router";
 import App from "./App.vue";
 import BaseButton from "./components/UI/BaseButton.vue";
 import BaseDialog from "./components/UI/BaseDialog.vue";
-import TodoList from "./components/TodoList.vue";
-import Login from "./components/Login.vue";
+import TodoList from "./pages/TodoList.vue";
+import Login from "./pages/Login.vue";
 
 const router = createRouter({
   history: createWebHistory(),

@@ -4,30 +4,31 @@ const ROOT_URL =
 
 // get all tasks
 export const MyApi = {
-  getTodos: () => {
+  getTasks: () => {
+    console.log("fetching data");
     const url = `${ROOT_URL}/tasks.json`;
     return axios.get(url);
   },
   // create a new task
-  createTodo: (value) => {
+  createTask: (value) => {
     const url = `${ROOT_URL}/tasks/.json`;
     return axios.post(url, {
       task: value,
       complete: false,
     });
   },
-  // toggle task complete/not complete
-  toggleTodo: (id, status) => {
+  // toggle task complete
+  toggleTask: (id, status) => {
     const url = `${ROOT_URL}/tasks/${id}.json`;
     return axios.patch(url, { complete: status });
   },
   //delete one task
-  deleteTodo: (id) => {
+  deleteTask: (id) => {
     const url = `${ROOT_URL}/tasks/${id}.json`;
     return axios.delete(url);
   },
-  //delete all todos
-  deleteAllTodo: () => {
+  //delete all tasks
+  deleteAllTasks: () => {
     const url = `${ROOT_URL}/tasks.json`;
     return axios.delete(url);
   },
