@@ -15,6 +15,7 @@ export const MyApi = {
     return axios.post(url, {
       task: value,
       complete: false,
+      created: new Date().toLocaleDateString(),
     });
   },
   // toggle task complete
@@ -26,6 +27,11 @@ export const MyApi = {
   deleteTask: (id) => {
     const url = `${ROOT_URL}/tasks/${id}.json`;
     return axios.delete(url);
+  },
+  //update task title
+  updateTask: (id, value) => {
+    const url = `${ROOT_URL}/tasks/${id}.json`;
+    return axios.patch(url, { task: value });
   },
   //delete all tasks
   deleteAllTasks: () => {

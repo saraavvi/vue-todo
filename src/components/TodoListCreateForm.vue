@@ -20,7 +20,6 @@ export default {
   },
   methods: {
     handleCreate() {
-      console.log(this.userInput);
       if (this.userInput.length > 0) {
         this.$emit("taskCreate", this.userInput);
       }

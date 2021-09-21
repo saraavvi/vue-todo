@@ -12,11 +12,11 @@
   </BaseDialog>
 
   <div class="list-actions-container">
-    <BaseButton mode="primary">FILTER</BaseButton>
+    <BaseButton mode="primary">SORT</BaseButton>
     <BaseButton @click="handleClearAllClick" mode="danger">
       CLEAR ALL
     </BaseButton>
-    <TodoListSearch :array="tasks" @searchResult="updateTasksToDisplay" />
+    <TodoListSearch @searchInput="(value) => $emit('searchInput', value)" />
   </div>
 </template>
 
@@ -25,7 +25,7 @@ import TodoListSearch from "../components/TodoListSearch";
 export default {
   components: { TodoListSearch },
   props: ["tasks"],
-  emits: ["taskClearAll", "updateTasksToDisplay"],
+  emits: ["taskClearAll", "searchInput"],
   data() {
     return {
       isClickedClearAll: false,
@@ -41,9 +41,6 @@ export default {
     handleClearAllConfirm() {
       this.$emit("taskClearAll");
       this.isClickedClearAll = false;
-    },
-    updateTasksToDisplay(searchResult) {
-      this.$emit("updateTasksToDisplay", searchResult);
     },
   },
 };

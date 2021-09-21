@@ -4,7 +4,7 @@
     <TodoListActionBar
       :tasks="tasks"
       @taskClearAll="taskClearAll"
-      @updateTasksToDisplay="updateTasksToDisplay"
+      @searchInput="setSearchTerm"
     />
     <ul>
       <TodoListItem
@@ -13,6 +13,7 @@
         :item="item"
         @taskToggleDone="taskToggleDone"
         @taskDelete="taskDelete"
+        @taskUpdate="taskUpdate"
       />
     </ul>
   </div>
@@ -32,12 +33,23 @@ export default {
   data() {
     return {
       tasks: null,
-      tasksToDisplay: null,
+      searchTerm: "",
     };
   },
+  computed: {
+    tasksToDisplay() {
+      if (this.searchTerm) {
+        return this.tasks.filter((item) => {
+          return item.task.includes(this.searchTerm);
+        });
+      } else {
+        return this.tasks;
+      }
+    },
+  },
   methods: {
-    updateTasksToDisplay(searchResult) {
-      this.tasksToDisplay = searchResult;
+    setSearchTerm(value) {
+      this.searchTerm = value;
     },
     getTasks() {
       MyApi.getTasks().then((data) => {
@@ -46,15 +58,15 @@ export default {
           results.unshift({
             id: id,
             task: data.data[id].task,
+            created: data.data[id].created,
+            description: data.data[id].description,
             complete: data.data[id].complete,
           });
         }
         this.tasks = results;
-        this.tasksToDisplay = results;
       });
     },
     async taskCreate(value) {
-      console.log(value);
       await MyApi.createTask(value);
       this.getTasks();
     },
@@ -66,6 +78,10 @@ export default {
       await MyApi.deleteTask(id);
       this.getTasks();
     },
+    async taskUpdate(id, value) {
+      await MyApi.updateTask(id, value);
+      this.getTasks();
+    },
     async taskClearAll() {
       await MyApi.deleteAllTasks();
       this.getTasks();
@@ -74,6 +90,9 @@ export default {
   mounted() {
     this.getTasks();
     console.log("todolist mounted");
+  },
+  updated() {
+    console.log("todolist updated");
   },
 };
 </script>

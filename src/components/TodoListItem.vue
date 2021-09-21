@@ -1,7 +1,8 @@
 <template>
   <BaseDialog title="Delete Task" v-if="isClickedDelete">
     <template #default>
-      <p>Are you sure you want to delete this task?</p>
+      <p>Are you sure you want to delete this task:</p>
+      <p>"{{ item.task }}"</p>
     </template>
     <template #actions>
       <BaseButton mode="secondary" @click="handleDialogClose">Close</BaseButton>
@@ -10,10 +11,14 @@
   </BaseDialog>
 
   <BaseDialog title="Task Details" v-if="isClickedDetails">
-    <template #default></template>
+    <template #default>
+      <input v-model="taskTitle" />
+    </template>
     <template #actions>
       <BaseButton @click="handleDialogClose" mode="secondary">CLOSE</BaseButton>
-      <BaseButton mode="primary">SAVE CHANGES</BaseButton>
+      <BaseButton @click="handleUpdateTask" mode="primary"
+        >SAVE CHANGES</BaseButton
+      >
     </template>
   </BaseDialog>
 
@@ -24,6 +29,7 @@
       </span>
     </div>
     <div class="actions-container">
+      <span class="date-text">{{ item.created }}</span>
       <input
         type="checkbox"
         :checked="isChecked"
@@ -43,10 +49,11 @@
 
 <script>
 export default {
-  emits: ["taskDelete", "taskToggleDone"],
+  emits: ["taskDelete", "taskToggleDone", "updateTask"],
   props: ["item", "id"],
   data() {
     return {
+      taskTitle: this.item.task,
       isClickedDelete: false,
       isClickedDetails: false,
     };
@@ -74,9 +81,20 @@ export default {
     handleDetailsClick() {
       this.isClickedDetails = true;
     },
+    handleUpdateTask() {
+      this.$emit("taskUpdate", this.item.id, this.taskTitle);
+      this.isClickedDetails = false;
+    },
+    handleAddDescription() {},
   },
   mounted() {
     console.log("list item mounted");
+  },
+  updated() {
+    console.log("list item updated");
+  },
+  unmounted() {
+    console.log("list item unmounted");
   },
 };
 </script>
@@ -98,6 +116,9 @@ li {
     display: flex;
     align-items: center;
 
+    .date-text {
+      color: $secondary-dark;
+    }
     input {
       height: 18px;
       width: 18px;

@@ -32,11 +32,9 @@ button {
 }
 .primary {
   background-color: $primary;
-  // color: white;
 }
 .info {
   background-color: $info;
-  // color: white;
 }
 .small {
   padding: 0.4rem 0.9rem;

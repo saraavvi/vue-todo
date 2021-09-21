@@ -1,41 +1,26 @@
-<!-- 
-gör mer allmän så att den går att använda
-till annat än todolistan. - SÅ skicka in array med namn istället för objekt hit?
-Använda computed properties istället för methods för search-funktionalitet? Hur?
--->
-
 <template>
-  <form @submit.prevent="handleSubmit">
-    <input
-      id="search-input"
-      v-model.trim="searchTerm"
-      type="text"
-      name="search"
-      placeholder="Search..."
-    />
-  </form>
+  <input
+    id="search-input"
+    v-model.trim="searchInput"
+    ref="userText"
+    type="text"
+    name="search"
+    placeholder="Search..."
+  />
 </template>
 
 <script>
 export default {
-  props: ["array"],
+  emits: ["searchInput"],
   data() {
     return {
-      searchTerm: "",
-      searchResult: "",
+      searchInput: "",
     };
   },
-  methods: {
-    handleSubmit() {
-      if (this.searchTerm) {
-        this.searchResult = this.array.filter((item) => {
-          return item.task.includes(this.searchTerm);
-        });
-        this.$emit("searchResult", this.searchResult);
-      } else {
-        this.$emit("searchResult", this.array);
-      }
-      this.searchTerm = "";
+  // should validate input
+  watch: {
+    searchInput(value) {
+      this.$emit("searchInput", value);
     },
   },
 };
