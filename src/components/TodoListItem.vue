@@ -12,7 +12,14 @@
 
   <BaseDialog title="Task Details" v-if="isClickedDetails">
     <template #default>
-      <input v-model="taskTitle" />
+      <div>
+        <label for="taskTitle">Title:</label>
+        <input id="taskTitle" v-model="taskTitle" />
+      </div>
+      <div>
+        <label for="taskDescription">Description:</label>
+        <textarea v-model="taskDescription" id="taskDescription" />
+      </div>
     </template>
     <template #actions>
       <BaseButton @click="handleDialogClose" mode="secondary">CLOSE</BaseButton>
@@ -49,11 +56,17 @@
 
 <script>
 export default {
-  emits: ["taskDelete", "taskToggleDone", "updateTask"],
-  props: ["item", "id"],
+  props: {
+    item: {
+      type: Object,
+      required: true,
+    },
+  },
+  emits: ["taskDelete", "taskToggleDone", "taskUpdate"],
   data() {
     return {
       taskTitle: this.item.task,
+      taskDescription: this.item.description,
       isClickedDelete: false,
       isClickedDetails: false,
     };
@@ -82,19 +95,29 @@ export default {
       this.isClickedDetails = true;
     },
     handleUpdateTask() {
-      this.$emit("taskUpdate", this.item.id, this.taskTitle);
+      if (
+        this.taskTitle !== this.item.task ||
+        this.taskDescription !== this.item.description
+      ) {
+        this.$emit(
+          "taskUpdate",
+          this.item.id,
+          this.taskTitle,
+          this.taskDescription
+        );
+      }
       this.isClickedDetails = false;
     },
-    handleAddDescription() {},
   },
   mounted() {
-    console.log("list item mounted");
+    // console.log("list item mounted");
+    console.log(this.item);
   },
   updated() {
-    console.log("list item updated");
+    // console.log("list item updated");
   },
   unmounted() {
-    console.log("list item unmounted");
+    // console.log("list item unmounted");
   },
 };
 </script>

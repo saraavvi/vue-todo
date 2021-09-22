@@ -2,7 +2,6 @@
   <TodoListCreateForm @taskCreate="taskCreate" />
   <div class="list-container">
     <TodoListActionBar
-      :tasks="tasks"
       @taskClearAll="taskClearAll"
       @searchInput="setSearchTerm"
     />
@@ -32,7 +31,7 @@ export default {
   },
   data() {
     return {
-      tasks: null,
+      tasks: [],
       searchTerm: "",
     };
   },
@@ -78,8 +77,8 @@ export default {
       await MyApi.deleteTask(id);
       this.getTasks();
     },
-    async taskUpdate(id, value) {
-      await MyApi.updateTask(id, value);
+    async taskUpdate(id, task, description) {
+      await MyApi.updateTask(id, task, description);
       this.getTasks();
     },
     async taskClearAll() {
@@ -89,10 +88,10 @@ export default {
   },
   mounted() {
     this.getTasks();
-    console.log("todolist mounted");
+    // console.log("todolist mounted");
   },
   updated() {
-    console.log("todolist updated");
+    // console.log("todolist updated");
   },
 };
 </script>

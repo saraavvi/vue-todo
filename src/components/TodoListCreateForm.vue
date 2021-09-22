@@ -19,6 +19,7 @@ export default {
     };
   },
   methods: {
+    //shoul validate user input more
     handleCreate() {
       if (this.userInput.length > 0) {
         this.$emit("taskCreate", this.userInput);

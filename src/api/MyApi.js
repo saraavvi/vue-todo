@@ -29,9 +29,10 @@ export const MyApi = {
     return axios.delete(url);
   },
   //update task title
-  updateTask: (id, value) => {
+  updateTask: (id, task, description) => {
+    console.log("task updated in database!");
     const url = `${ROOT_URL}/tasks/${id}.json`;
-    return axios.patch(url, { task: value });
+    return axios.patch(url, { task: task, description: description });
   },
   //delete all tasks
   deleteAllTasks: () => {

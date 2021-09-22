@@ -6,7 +6,15 @@
 
 <script>
 export default {
-  props: ["mode", "size"],
+  props: {
+    mode: {
+      type: String,
+      default: "primary",
+    },
+    size: {
+      type: String,
+    },
+  },
 };
 </script>
 

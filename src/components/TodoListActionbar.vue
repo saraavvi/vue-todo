@@ -24,7 +24,6 @@
 import TodoListSearch from "../components/TodoListSearch";
 export default {
   components: { TodoListSearch },
-  props: ["tasks"],
   emits: ["taskClearAll", "searchInput"],
   data() {
     return {
