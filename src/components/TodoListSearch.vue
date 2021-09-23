@@ -1,3 +1,4 @@
+<!-- behöver ej vara i egen component - föytta till actionbar -->
 <template>
   <input
     id="search-input"
@@ -17,7 +18,6 @@ export default {
       searchInput: "",
     };
   },
-  // should validate input
   watch: {
     searchInput(value) {
       this.$emit("searchInput", value);

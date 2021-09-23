@@ -10,9 +10,7 @@
       </BaseButton>
     </template>
   </BaseDialog>
-
   <div class="list-actions-container">
-    <!-- <BaseButton mode="primary">SORT</BaseButton> -->
     <select
       @change="handleSelectOption"
       v-model="selectedSortOption"
@@ -23,7 +21,7 @@
       <option value="oldest">Oldest</option>
     </select>
     <BaseButton @click="handleClearAllClick" mode="danger">
-      CLEAR ALL
+      clear all
     </BaseButton>
     <TodoListSearch @searchInput="(value) => $emit('searchInput', value)" />
   </div>
@@ -52,9 +50,6 @@ export default {
       this.isClickedClearAll = false;
     },
     handleSelectOption() {
-      //beroende på vad som är valt: datum, name, prioritet: sortera tasksToDisplay
-      // och skriv ut i rätt ordning.
-      // console.log(this.selectedSortOption);
       this.$emit("sortOption", this.selectedSortOption);
     },
   },

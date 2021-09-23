@@ -16,6 +16,7 @@ export const MyApi = {
       task: value,
       complete: false,
       created: new Date(),
+      priority: "medium",
     });
   },
   // toggle task complete
@@ -28,11 +29,15 @@ export const MyApi = {
     const url = `${ROOT_URL}/tasks/${id}.json`;
     return axios.delete(url);
   },
-  //update task title
-  updateTask: (id, task, description) => {
+  //update task
+  updateTask: (id, task, description, priority) => {
     console.log("task updated in database!");
     const url = `${ROOT_URL}/tasks/${id}.json`;
-    return axios.patch(url, { task: task, description: description });
+    return axios.patch(url, {
+      task: task,
+      description: description,
+      priority: priority,
+    });
   },
   //delete all tasks
   deleteAllTasks: () => {

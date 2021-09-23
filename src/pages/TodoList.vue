@@ -42,7 +42,9 @@ export default {
       let result = this.tasks;
       if (this.searchTerm) {
         result = this.tasks.filter((item) => {
-          return item.task.includes(this.searchTerm);
+          return item.task
+            .toLowerCase()
+            .includes(this.searchTerm.toLowerCase());
         });
       }
       if (this.sortOption) {
@@ -77,6 +79,7 @@ export default {
             created: data.data[id].created,
             description: data.data[id].description,
             complete: data.data[id].complete,
+            priority: data.data[id].priority,
           });
         }
         this.tasks = results;
@@ -94,8 +97,8 @@ export default {
       await MyApi.deleteTask(id);
       this.getTasks();
     },
-    async taskUpdate(id, task, description) {
-      await MyApi.updateTask(id, task, description);
+    async taskUpdate(id, task, description, priority) {
+      await MyApi.updateTask(id, task, description, priority);
       this.getTasks();
     },
     async taskClearAll() {

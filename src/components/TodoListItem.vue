@@ -20,6 +20,16 @@
         <label for="taskDescription">Description:</label>
         <textarea v-model="taskDescription" id="taskDescription" />
       </div>
+      <label for="priority">Priority:</label>
+      <select v-model="taskPriority" name="priority" id="priority">
+        <option value="low" :selected="item.priority === 'low'"> low </option>
+        <option value="medium" :selected="item.priority === 'medium'">
+          medium
+        </option>
+        <option value="high" :selected="item.priority === 'high'">
+          high
+        </option>
+      </select>
     </template>
     <template #actions>
       <BaseButton @click="handleDialogClose" mode="secondary">close</BaseButton>
@@ -35,23 +45,29 @@
         {{ item.task }}
       </span>
     </div>
-    <div class="actions-container">
-      <span class="date-text">
-        {{ new Date(item.created).toLocaleDateString() }}
-      </span>
-      <input
-        type="checkbox"
-        :checked="isChecked"
-        @click="handleTaskToggleDone"
-      />
-      <BaseButton @click="handleDetailsClick" mode="info" size="small">
-        details
-      </BaseButton>
-      <button class="delete-icon" type="button">
-        <i @click="handleDeleteClick" style="font-size:18px" class="fas"
-          >&#xf2ed;</i
-        >
-      </button>
+    <div class="information-container">
+      <div>
+        <span class="dot" :class="item.priority"></span>
+        <span class="priority"> {{ priorityText }}</span>
+      </div>
+      <div class="actions-container">
+        <span class="date-text">
+          {{ new Date(item.created).toLocaleDateString() }}
+        </span>
+        <input
+          type="checkbox"
+          :checked="isChecked"
+          @click="handleTaskToggleDone"
+        />
+        <BaseButton @click="handleDetailsClick" mode="info" size="small">
+          details
+        </BaseButton>
+        <button class="delete-icon" type="button">
+          <i @click="handleDeleteClick" style="font-size:18px" class="fas"
+            >&#xf2ed;</i
+          >
+        </button>
+      </div>
     </div>
   </li>
 </template>
@@ -69,6 +85,7 @@ export default {
     return {
       taskTitle: this.item.task,
       taskDescription: this.item.description,
+      taskPriority: this.item.priority,
       isClickedDelete: false,
       isClickedDetails: false,
     };
@@ -76,6 +93,18 @@ export default {
   computed: {
     isChecked() {
       return this.item.complete;
+    },
+    // isSelected(value) {
+    //   return item.priority === "low";
+    // },
+    priorityText() {
+      if (this.item.priority === "medium") {
+        return "Medium priority";
+      } else if (this.item.priority === "low") {
+        return "Low priority";
+      } else {
+        return "High priority";
+      }
     },
   },
   methods: {
@@ -99,27 +128,19 @@ export default {
     handleUpdateTask() {
       if (
         this.taskTitle !== this.item.task ||
-        this.taskDescription !== this.item.description
+        this.taskDescription !== this.item.description ||
+        this.taskPriority !== this.item.priority
       ) {
         this.$emit(
           "taskUpdate",
           this.item.id,
           this.taskTitle,
-          this.taskDescription
+          this.taskDescription,
+          this.taskPriority
         );
       }
       this.isClickedDetails = false;
     },
-  },
-  mounted() {
-    // console.log("list item mounted");
-    // console.log(this.item);
-  },
-  updated() {
-    // console.log("list item updated");
-  },
-  unmounted() {
-    // console.log("list item unmounted");
   },
 };
 </script>
@@ -136,26 +157,48 @@ li {
   .checked {
     text-decoration: line-through;
   }
-
-  .actions-container {
+  .information-container {
     display: flex;
-    align-items: center;
+    justify-content: space-between;
+    width: 40%;
 
-    .date-text {
-      color: $secondary-dark;
+    .actions-container {
+      display: flex;
+      align-items: center;
+
+      .date-text {
+        color: $secondary-dark;
+      }
+      input {
+        height: 18px;
+        width: 18px;
+        margin: 0 10px;
+        cursor: pointer;
+      }
+      .delete-icon {
+        border: none;
+        background-color: white;
+        color: $danger;
+        cursor: pointer;
+      }
     }
-    input {
-      height: 18px;
-      width: 18px;
+    .priority {
       margin: 0 10px;
-      cursor: pointer;
     }
-
-    .delete-icon {
-      border: none;
-      background-color: white;
-      color: $danger;
-      cursor: pointer;
+    .medium {
+      background-color: orange;
+    }
+    .high {
+      background-color: red;
+    }
+    .low {
+      background-color: green;
+    }
+    .dot {
+      height: 10px;
+      width: 10px;
+      border-radius: 50%;
+      display: inline-block;
     }
   }
 }
