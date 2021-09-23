@@ -4,6 +4,7 @@
     <TodoListActionBar
       @taskClearAll="taskClearAll"
       @searchInput="setSearchTerm"
+      @sortOption="setSortOption"
     />
     <ul>
       <TodoListItem
@@ -32,23 +33,39 @@ export default {
   data() {
     return {
       tasks: [],
-      searchTerm: "",
+      searchTerm: null,
+      sortOption: null,
     };
   },
   computed: {
     tasksToDisplay() {
+      let result = this.tasks;
       if (this.searchTerm) {
-        return this.tasks.filter((item) => {
+        result = this.tasks.filter((item) => {
           return item.task.includes(this.searchTerm);
         });
-      } else {
-        return this.tasks;
       }
+      if (this.sortOption) {
+        if (this.sortOption === "newest") {
+          result = result.slice().sort((a, b) => {
+            return new Date(b.created) - new Date(a.created);
+          });
+        }
+        if (this.sortOption === "oldest") {
+          result = result.slice().sort((a, b) => {
+            return new Date(a.created) - new Date(b.created);
+          });
+        }
+      }
+      return result;
     },
   },
   methods: {
     setSearchTerm(value) {
       this.searchTerm = value;
+    },
+    setSortOption(value) {
+      this.sortOption = value;
     },
     getTasks() {
       MyApi.getTasks().then((data) => {
@@ -88,10 +105,6 @@ export default {
   },
   mounted() {
     this.getTasks();
-    // console.log("todolist mounted");
-  },
-  updated() {
-    // console.log("todolist updated");
   },
 };
 </script>

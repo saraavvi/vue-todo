@@ -20,6 +20,7 @@ export default {
 
 <style scoped lang="scss">
 button {
+  text-transform: uppercase;
   border: none;
   font-weight: bold;
   font-size: 0.7rem;

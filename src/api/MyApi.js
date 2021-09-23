@@ -15,7 +15,7 @@ export const MyApi = {
     return axios.post(url, {
       task: value,
       complete: false,
-      created: new Date().toLocaleDateString(),
+      created: new Date(),
     });
   },
   // toggle task complete

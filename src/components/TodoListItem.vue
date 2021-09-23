@@ -22,10 +22,10 @@
       </div>
     </template>
     <template #actions>
-      <BaseButton @click="handleDialogClose" mode="secondary">CLOSE</BaseButton>
-      <BaseButton @click="handleUpdateTask" mode="primary"
-        >SAVE CHANGES</BaseButton
-      >
+      <BaseButton @click="handleDialogClose" mode="secondary">close</BaseButton>
+      <BaseButton @click="handleUpdateTask" mode="primary">
+        save changes
+      </BaseButton>
     </template>
   </BaseDialog>
 
@@ -36,14 +36,16 @@
       </span>
     </div>
     <div class="actions-container">
-      <span class="date-text">{{ item.created }}</span>
+      <span class="date-text">
+        {{ new Date(item.created).toLocaleDateString() }}
+      </span>
       <input
         type="checkbox"
         :checked="isChecked"
         @click="handleTaskToggleDone"
       />
       <BaseButton @click="handleDetailsClick" mode="info" size="small">
-        DETAILS
+        details
       </BaseButton>
       <button class="delete-icon" type="button">
         <i @click="handleDeleteClick" style="font-size:18px" class="fas"
@@ -111,7 +113,7 @@ export default {
   },
   mounted() {
     // console.log("list item mounted");
-    console.log(this.item);
+    // console.log(this.item);
   },
   updated() {
     // console.log("list item updated");
